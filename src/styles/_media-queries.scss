@@ -1,0 +1,37 @@
+@media (min-width: 600px) {
+	html {
+		font-size: 69%;
+	}
+	main {
+		h2 {
+			text-align: left;
+			margin-left: 10%;
+		}
+		.btns-board {
+			margin-left: 10%;
+			justify-content: flex-start;
+		}
+	}
+}
+
+@media (min-width: 888px) {
+	html {
+		font-size: 72%;
+	}
+	main {
+		h2 {
+			margin-left: calc(50% - 400px);
+		}
+		.content {
+			overflow-x: auto;
+		}
+		.row-days p {
+			font-size: 1.3rem;
+			font-weight: 700;
+		}
+		#add-activity {
+			margin: 0px;
+			margin-left: calc(50% - 400px);
+		}
+	}
+}

@@ -1,0 +1,24 @@
+$main-color: #d8f3dc;
+$main-color-dark: #1b4332;
+$third-color: #bbdefb;
+$third-color-light: #e3f2fd;
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Inter', sans-serif;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	height: 100vh;
+	overflow-y: scroll;
+	position: relative;
+	background-color: $main-color;
+}
