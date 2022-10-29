@@ -7,7 +7,7 @@ export const notificationError = (text: string): void => {
 	Toastify({
 		text,
 		duration: 3000,
-		gravity: 'bottom',
+		gravity: 'top',
 		position: 'right',
 		stopOnFocus: true,
 		className: 'error',
@@ -18,7 +18,7 @@ export const notificationSuccess = (text: string): void => {
 	Toastify({
 		text,
 		duration: 3000,
-		gravity: 'bottom',
+		gravity: 'top',
 		position: 'right',
 		stopOnFocus: true,
 		className: 'success',

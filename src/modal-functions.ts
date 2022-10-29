@@ -41,9 +41,8 @@ export const uploadTask = (): void => {
 		);
 
 		addTask(value, id);
-		FORM_MODAL.reset();
-		FORM_MODAL.focus();
 
+		hiddenModal();
 		notificationSuccess('Tarea agregada con éxito 🥳');
 	}
 };
