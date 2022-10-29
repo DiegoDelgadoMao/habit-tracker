@@ -1,6 +1,7 @@
 import { activityStructure } from './tamplate';
 import { containerTable } from './utils/htmlElements';
 import { TaskObject } from './utils/fields.dto';
+import { notificationSuccess } from './utils';
 
 enum STORAGE_NAME {
 	CHORES = 'chores',
@@ -8,39 +9,40 @@ enum STORAGE_NAME {
 
 export const addTask = (task: string, id: string): void => {
 	let response = localStorage.getItem(STORAGE_NAME.CHORES);
+	let newTask = {
+		id,
+		task,
+		lun: false,
+		mar: false,
+		mie: false,
+		jue: false,
+		vie: false,
+		sab: false,
+		dom: false,
+	};
 	if (response) {
 		let result: TaskObject[] = JSON.parse(response);
-
-		const newTask: TaskObject = {
-			id,
-			task,
-			lun: false,
-			mar: false,
-			mie: false,
-			jue: false,
-			vie: false,
-			sab: false,
-			dom: false,
-		};
 
 		result.push(newTask);
 		let newData = JSON.stringify(result);
 		localStorage.setItem(STORAGE_NAME.CHORES, newData);
 	} else {
-		let taskObject: TaskObject = {
-			id,
-			task,
-			lun: false,
-			mar: false,
-			mie: false,
-			jue: false,
-			vie: false,
-			sab: false,
-			dom: false,
-		};
-		let storage: TaskObject[] = [taskObject];
+		let storage: TaskObject[] = [newTask];
 		const data = JSON.stringify(storage);
 		localStorage.setItem(STORAGE_NAME.CHORES, data);
+	}
+};
+
+export const deleteTask = (id: string, element: HTMLDivElement): void => {
+	containerTable.removeChild(element);
+
+	const response = localStorage.getItem(STORAGE_NAME.CHORES) || '[]';
+	let data: TaskObject[] = JSON.parse(response);
+
+	if (data.length) {
+		const updateData = data.filter(item => item.id !== id);
+		localStorage.setItem(STORAGE_NAME.CHORES, JSON.stringify(updateData));
+		notificationSuccess('Se eliminó correctamente 🎉');
 	}
 };
 
@@ -65,17 +67,14 @@ export const saveData = (
 	const response = localStorage.getItem(STORAGE_NAME.CHORES);
 	if (response) {
 		const data: TaskObject[] = JSON.parse(response);
-		let dataUpdate = data.map(task => {
-			if (task.id === id) {
-				return {
-					...task,
-					[change.day]: change.value,
-				};
-			}
-			return task;
-		});
 
-		localStorage.setItem(STORAGE_NAME.CHORES, JSON.stringify(dataUpdate));
+		let index = data.findIndex(task => task.id === id);
+		let prevData = data[index];
+		data[index] = {
+			...prevData,
+			[change.day]: change.value,
+		};
+		localStorage.setItem(STORAGE_NAME.CHORES, JSON.stringify(data));
 	}
 };
 
@@ -86,5 +85,6 @@ export const resetEverything = (): void => {
 			containerTable?.removeChild(element);
 			localStorage.clear();
 		});
+		notificationSuccess('Se limpió con éxito 🥳');
 	}
 };

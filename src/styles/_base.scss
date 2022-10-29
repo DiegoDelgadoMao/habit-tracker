@@ -22,3 +22,15 @@ body {
 	position: relative;
 	background-color: $main-color;
 }
+
+.error {
+	@include notification-base;
+	background-color: #ffa6a6;
+	color: #7b0d0d;
+}
+
+.success {
+	@include notification-base;
+	background-color: $third-color;
+	color: $main-color-dark;
+}

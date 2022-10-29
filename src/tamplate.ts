@@ -1,20 +1,30 @@
 import { DaysOfTheWeek, ExtraInfo } from './utils/fields.dto';
-import { saveData } from './behaviors';
+import { saveData, deleteTask } from './behaviors';
+
+import trashIconImg from './assets/trash-icon.svg';
 
 export const activityStructure = (
 	extra: ExtraInfo,
 	data: DaysOfTheWeek
-): HTMLFormElement => {
+): HTMLDivElement => {
 	const { id, task } = extra;
 
-	const formElement = document.createElement('form');
-	formElement.setAttribute('name', 'miFormulario');
-	formElement.classList.add('row-activities');
+	const containerChores = document.createElement('div');
+	containerChores.classList.add('row-activities');
 
 	const paragraph = document.createElement('p');
 	paragraph.innerHTML = task;
 
-	formElement.append(paragraph);
+	const trashIcon = document.createElement('img');
+	trashIcon.setAttribute('src', trashIconImg);
+
+	trashIcon.addEventListener('click', e => {
+		const iconElement = e.target as HTMLImageElement;
+		const parent = iconElement.parentElement as HTMLDivElement;
+		deleteTask(id, parent);
+	});
+	containerChores.append(trashIcon);
+	containerChores.append(paragraph);
 
 	const transform = Object.entries(data);
 
@@ -32,8 +42,8 @@ export const activityStructure = (
 			saveData(id, { value, day });
 		});
 
-		formElement.append(input);
+		containerChores.append(input);
 	});
 
-	return formElement;
+	return containerChores;
 };

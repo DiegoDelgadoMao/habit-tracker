@@ -1,4 +1,4 @@
-import { $ID } from './utils';
+import { $ID, notificationError, notificationSuccess } from './utils';
 
 import { containerTable, MODAL, FORM_MODAL } from './utils/htmlElements';
 
@@ -20,10 +20,7 @@ export const uploadTask = (): void => {
 
 	let value: string = inputUser.value;
 	if (!value.length) {
-		inputUser.classList.add('error');
-		setTimeout(() => {
-			inputUser.classList.remove('error');
-		}, 2000);
+		notificationError('No agregaste ninguna tarea 🙁');
 	} else {
 		if (value.length > 20) value = value.slice(0, 20).padEnd(23, '.');
 		const id = v4();
@@ -46,5 +43,7 @@ export const uploadTask = (): void => {
 		addTask(value, id);
 		FORM_MODAL.reset();
 		FORM_MODAL.focus();
+
+		notificationSuccess('Tarea agregada con éxito 🥳');
 	}
 };
